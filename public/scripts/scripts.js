@@ -35,10 +35,13 @@ $(document).ready(function(){
   //     } // end success
   //   }); //end ajax
 
-  // ajax post code that sends object to /routename route
+$('#addTask').on('click', function(){
+
   var objectToSend={
-    taskName: 'Please do this'
+    taskName: $('#newTaskText').val()
   };
+
+  // ajax post code that sends object to /routename route
   $.ajax({
     type: 'POST',
     url: '/addTask',
@@ -52,5 +55,7 @@ $(document).ready(function(){
       }
     }
   }); // end Ajax post code
+
+}); // end #addTask.on('click')
 
 }); // end document ready

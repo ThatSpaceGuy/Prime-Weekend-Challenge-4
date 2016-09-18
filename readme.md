@@ -35,9 +35,9 @@ Versioning Plan
 * 0.2.0 - Database table created with creation queries stored in "dbSetup.sql"
 * 0.2.1 - Server: app.post route to INSERT a new task into the database
 * 0.2.2 - Client: ajax post call with new task information on document load
-<!-- Current Step -->
 * 0.2.3 - HTML: #newTask button and input field
 * 0.2.4 - Client: #newTask button .on('click') to grab new task info wrapping the ajax post call
+<!-- Current Step -->
 * 0.2.5 - Client: logic to make sure that something is entered in the input field before making the ajax call
 * 0.2.6 - CSS: Tweak basic styling of elements currently in HTML
 
