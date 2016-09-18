@@ -31,16 +31,17 @@ Adjust the logic so that completed tasks are brought to the bottom of the page, 
 
 Versioning Plan
 ---------------
-* 0.1.0 - ReadMe & html/js/css/server/heroku handshakes - initial commit
+* 0.1.0 - ReadMe & html/js/css/server handshakes - initial commit
 * 0.2.0 - Database table created with creation queries stored in "dbSetup.sql"
+<!-- Current Step -->
 * 0.2.1 - Server: app.post route to INSERT a new task into the database
 * 0.2.2 - Client: ajax post call with new task information on document load
 * 0.2.3 - HTML: #newTask button and input field
 * 0.2.4 - Client: #newTask button .on('click') to grab new task info wrapping the ajax post call
 * 0.2.5 - Client: logic to make sure that something is entered in the input field before making the ajax call
 * 0.2.6 - CSS: Tweak basic styling of elements currently in HTML
-* 0.3.0 - Test Create Task button making sure new tasks persist in database
 
+* 0.3.0 - Test Create Task button making sure new tasks persist in database
 * 0.3.1 - Server: app.get route to SELECT all tasks in the database
 * 0.3.2 - Client: ajax get call for entire task list added in #newTask .on('click')
 * 0.3.3 - Client: displayTasks() function to show all tasks from dB on DOM (basic display of Task name and that it is not completed) (console.log only)
@@ -80,6 +81,7 @@ Versioning Plan
 * 3.2.0 - Ability to Uncomplete a task
 * 3.3.0 - Visually separate completed tasks with headers
 * 3.4.0 - Animate transitions for tasks
-* 3.5.0 - Urgent flag for tasks
-* 3.6.0 - Categories for tasks
+* 3.5.0 - Urgent flag and creation date for tasks
+* 3.6.0 - Sort by Urgent, completed, creation date
+* 3.7.0 - Categories for tasks
 * 4.0.0 - Test app and sign off on Extra Mode

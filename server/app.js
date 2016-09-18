@@ -5,7 +5,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
 //// --------NEED TO ENTER ***: Database Name
-var connectionString = 'postgress://localhost:5432/***';
+var connectionString = 'postgress://localhost:5432/ToDoAppDB';
 
 app.use(bodyParser.urlencoded( {extended: false } ));
 app.use(bodyParser.json());
@@ -26,39 +26,41 @@ app.get('/', function(req,res){
 app.use(express.static('public'));
 
 // GET route with a Database call
-app.get('/getRoute', function(req,res){
-  pg.connect(connectionString, function(err, client, done){
-    if (err){
-      if (verbose) {console.log(err);}
-    } else {
-      if (verbose) {console.log('app.get/getRoute connected');}
-      var resultsArray=[];
-      //// --------NEED TO ENTER ***: SQL Query
-      var queryResults=client.query('***');
-      queryResults.on('row',function(row){
-        resultsArray.push(row);
-      });
-      if (verbose) {console.log('resultsArray from getRoute query:',resultsArray);}
-      queryResults.on('end',function(){
-        done();
-        return res.send(resultsArray);
-      }); // end queryResults.on('end')
-    }// end else
-  }); // end pg.connect
-}); // end app.get getRout
+// app.get('/getRoute', function(req,res){
+//   pg.connect(connectionString, function(err, client, done){
+//     if (err){
+//       if (verbose) {console.log(err);}
+//     } else {
+//       if (verbose) {console.log('app.get/getRoute connected');}
+//       var resultsArray=[];
+//       //// --------NEED TO ENTER ***: SQL Query
+//       var queryResults=client.query('***');
+//       queryResults.on('row',function(row){
+//         resultsArray.push(row);
+//       });
+//       if (verbose) {console.log('resultsArray from getRoute query:',resultsArray);}
+//       queryResults.on('end',function(){
+//         done();
+//         return res.send(resultsArray);
+//       }); // end queryResults.on('end')
+//     }// end else
+//   }); // end pg.connect
+// }); // end app.get getRoute
 
 
 // post route to receive information from client
-app.post('/routeName', urlEncodedParser, function(req,res){
-  if (verbose) {console.log('Route /routeName hit', req.body);}
-  res.send('/routeName response. Received: '+req.body);
-});
+// app.post('/routeName', function(req,res){
+//   if (verbose) {console.log('Route /routeName hit', req.body);}
+//   res.send('/routeName response. Received: '+req.body);
+// });
 
 //post route to add or update information in Database
-app.post( '/postRouteA', urlencodedParser, function( req, res ){
-  if (verbose) {console.log( 'postRouteA route hit', req.body );}
-  //// --------NEED TO ENTER ***: SQL Query
-  var queryString = '***';
+app.post( '/newTask', function( req, res ){
+  if (verbose) {console.log( 'newTask route hit', req.body );}
+
+  var newTaskName = req.body.taskName;
+
+  var queryString = 'INSERT INTO todolist (task_name, completed) VALUES (($1),false);';
   if (verbose) {console.log('sending to database:', queryString);}
   //send queryString to database
   pg.connect(connectionString, function(err, client, done){
@@ -66,37 +68,37 @@ app.post( '/postRouteA', urlencodedParser, function( req, res ){
       if (verbose) {console.log(err);}
     }
     else{
-      client.query(queryString);
+      client.query(queryString,[newTaskName]);
       done();
       return res.sendStatus(200);
     }
   });
-});//end /postRouteA
+});//end /newTask
 
 // post route that adds or updates information in Database and also receives info
-app.post( '/postRouteB', urlencodedParser, function( req, res ){
-  if (verbose) {console.log( 'postRouteB route hit', req.body );}
-  //// --------NEED TO ENTER ***: SQL Query
-  var queryString = '***';
-  if (verbose) {console.log('sending to database:', queryString);}
-  //send queryString to database
-  pg.connect(connectionString, function(err, client, done){
-    if (err){
-      if (verbose) {console.log(err);}
-    }
-    else{
-      client.query(queryString);
-      //// --------NEED TO ENTER ***: SQL Query
-      var queryResult = client.query('***');
-      var resultsArray = [];
-      queryResult.on('row', function(row){
-        resultsArray.push(row);
-      });
-      queryResult.on('end', function(){
-        if (verbose) {console.log(resultsArray);}
-        done();
-        return res.json(resultsArray);
-      });
-    }
-  });
-});//end /postRouteB
+// app.post( '/postRouteB', function( req, res ){
+//   if (verbose) {console.log( 'postRouteB route hit', req.body );}
+//   //// --------NEED TO ENTER ***: SQL Query
+//   var queryString = '***';
+//   if (verbose) {console.log('sending to database:', queryString);}
+//   //send queryString to database
+//   pg.connect(connectionString, function(err, client, done){
+//     if (err){
+//       if (verbose) {console.log(err);}
+//     }
+//     else{
+//       client.query(queryString);
+//       //// --------NEED TO ENTER ***: SQL Query
+//       var queryResult = client.query('***');
+//       var resultsArray = [];
+//       queryResult.on('row', function(row){
+//         resultsArray.push(row);
+//       });
+//       queryResult.on('end', function(){
+//         if (verbose) {console.log(resultsArray);}
+//         done();
+//         return res.json(resultsArray);
+//       });
+//     }
+//   });
+// });//end /postRouteB
