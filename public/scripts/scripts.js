@@ -41,10 +41,10 @@ $(document).ready(function(){
   };
   $.ajax({
     type: 'POST',
-    url: '/newTask',
+    url: '/addTask',
     data: objectToSend,
     success: function( data ){
-      if (verbose) {console.log( 'got this from /newTask - ' + data );}
+      if (verbose) {console.log( 'got this from /addTask - ' + data );}
     },
     statusCode: {
       404: function(){

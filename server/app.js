@@ -55,8 +55,8 @@ app.use(express.static('public'));
 // });
 
 //post route to add or update information in Database
-app.post( '/newTask', function( req, res ){
-  if (verbose) {console.log( 'newTask route hit', req.body );}
+app.post( '/addTask', function( req, res ){
+  if (verbose) {console.log( 'addTask route hit', req.body );}
 
   var newTaskName = req.body.taskName;
 
@@ -73,7 +73,7 @@ app.post( '/newTask', function( req, res ){
       return res.sendStatus(200);
     }
   });
-});//end /newTask
+});//end /addTask
 
 // post route that adds or updates information in Database and also receives info
 // app.post( '/postRouteB', function( req, res ){
