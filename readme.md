@@ -1,7 +1,7 @@
 Weekend Challenge 4
 ===================
 Description from assignment
-Hello Primers!
+*Hello Primers!
 
 This weekend is all about showing us that you have a handle on each of the different parts of the full stack. For this weekends challenge, you are going to create a 'TO DO' application. This is the type of application that is very common to tackle when learning a new language, which makes it extremely valuable to work through for the first time, since chances are good that at some point in your career you will tackle this type of application, but in another language.
 
@@ -26,14 +26,7 @@ In whatever fashion you would like, create an 'are you sure: yes / no' option wh
 
 PRO MODE
 
-Adjust the logic so that completed tasks are brought to the bottom of the page, where the remaining tasks left to complete are brought to the top of the list.
-
-
-6) git add . & git commit -m "Initial Commit"
-7) git push origin master
-8) git push heroku master
-9) heroku ps:scale web=1
-10) heroku open [To test]
+Adjust the logic so that completed tasks are brought to the bottom of the page, where the remaining tasks left to complete are brought to the top of the list.*
 
 
 Versioning Plan
