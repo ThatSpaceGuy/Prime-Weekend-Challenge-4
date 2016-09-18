@@ -37,8 +37,14 @@ $(document).ready(function(){
 
 $('#addTask').on('click', function(){
 
+  var newTaskName = $('#newTaskText').val();
+
+  if (newTaskName===''){
+    
+  }
+
   var objectToSend={
-    taskName: $('#newTaskText').val()
+    taskName:
   };
 
   // ajax post code that sends object to /routename route
