@@ -1,6 +1,6 @@
 Weekend Challenge 4
 ===================
-Description from assignment
+Description from assignment:
 Hello Primers!
 
 This weekend is all about showing us that you have a handle on each of the different parts of the full stack. For this weekends challenge, you are going to create a 'TO DO' application. This is the type of application that is very common to tackle when learning a new language, which makes it extremely valuable to work through for the first time, since chances are good that at some point in your career you will tackle this type of application, but in another language.
@@ -80,4 +80,6 @@ Versioning Plan
 * 3.2.0 - Ability to Uncomplete a task
 * 3.3.0 - Visually separate completed tasks with headers
 * 3.4.0 - Animate transitions for tasks
+* 3.5.0 - Urgent flag for tasks
+* 3.6.0 - Categories for tasks
 * 4.0.0 - Test app and sign off on Extra Mode
