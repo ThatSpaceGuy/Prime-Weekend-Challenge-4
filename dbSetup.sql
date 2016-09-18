@@ -1,0 +1,1 @@
+-- Run these SQL commands to set-up the database
