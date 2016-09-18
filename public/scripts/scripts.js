@@ -35,20 +35,22 @@ $(document).ready(function(){
   //     } // end success
   //   }); //end ajax
 
-  // // ajax post code that sends object to /routename route
-  // var objectToSend={};
-  // $.ajax({
-  //   type: 'POST',
-  //   url: '/postRoute',
-  //   data: objectToSend,
-  //   success: function( data ){
-  //     if (verbose) {console.log( 'got this from /postRoute - ' + data );}
-  //   statusCode: {
-  //          404: function(){
-  //            alert('404 Error! Cannot load page');
-  //          }
-  //       }
-  //   }
-  // }); // end Ajax post code
+  // ajax post code that sends object to /routename route
+  var objectToSend={
+    taskName: 'Please do this'
+  };
+  $.ajax({
+    type: 'POST',
+    url: '/newTask',
+    data: objectToSend,
+    success: function( data ){
+      if (verbose) {console.log( 'got this from /newTask - ' + data );}
+    },
+    statusCode: {
+      404: function(){
+        alert('404 Error! Cannot load page');
+      }
+    }
+  }); // end Ajax post code
 
 }); // end document ready
