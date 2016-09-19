@@ -8,7 +8,13 @@ html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, a {
 
 @font-face {
     font-family: primeFont;
+    src: url(/media/prime_light.otf);
+}
+
+@font-face {
+    font-family: primeFont;
     src: url(/media/prime_regular.otf);
+    font-weight: bold;
 }
 
 body {
@@ -17,6 +23,29 @@ body {
 	background-image: url(/media/spaceart4.jpg);
 	background-position: top -170px center;
 	background-size: 125%;
+}
+
+button {
+	border-radius: 5px;
+	background-color: lightblue;
+}
+
+button:hover {
+	background-color: blue;
+	color: white;
+}
+
+h1 {
+	font-size: 50px;
+	font-weight: bold;
+}
+h2 {
+	font-size: 20px;
+}
+h3 {
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 5px;
 }
 
 #pageHeader, #appBody {
@@ -28,14 +57,20 @@ body {
 	margin-top: 50px;
 }
 
+#addTaskBox {
+	padding: 10px;
+}
+
 #appBody {
 	background-color: white;
-	margin-top: 30px;
+	margin-top: 20px;
+	padding: 0px 10px 10px 10px;
 	border-radius: 10px;
 }
 
 table, th, td {
 		margin: auto;
+		padding: 5px;
     border: 1px solid black;
 }
 
@@ -43,13 +78,14 @@ table, th, td {
 	width: 70%;
 }
 
-h1 {
-	font-size: 50px;
+.openTask {
+	background-color: orange;
 }
-h2 {
-	font-size: 20px;
+
+.completedTask {
+	background-color: lightgray;
 }
-h3 {
-	font-size: 15px;
-	margin-top: 5px;
+
+.completedName {
+	text-decoration: line-through;
 }

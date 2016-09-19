@@ -66,12 +66,12 @@ function displayTasks(){
           // Set Completed text
           var completedText;
           if (taskList[i].completed) {
-            completedText = 'Complete!';
+            completedText = ' class="completedTask"><td>Complete!</td><td class="completedName"';
           } else {
-            completedText = '<button class="completeButton" data-id="'+taskList[i].id+'">Mark this ToLu complete!</button>';
+            completedText = ' class="openTask"><td><button class="completeButton" data-id="'+taskList[i].id+'">Mark this ToLu complete!</button></td><td';
           }
           document.getElementById("toDoListBody").innerHTML +=
-          '<tr><td>'+completedText+'</td><td>'+taskList[i].task_name+'</td></tr>';
+          '<tr'+completedText+'>'+taskList[i].task_name+'</td></tr>';
         }
       } // end if
     } // end success

@@ -49,14 +49,14 @@ Versioning Plan
 * 0.3.5 - CSS: Tweak basic styling of tasks when shown in the taskList
 * 0.4.0 - Test Create Task button ensuring DOM is updated correctly
 
-<!-- Current Step -->
 * 0.4.1 - Server: app.post route to UPDATE a completed task by id in the database
 * 0.4.2 - Client: add 'Complete' button options to tasks in displayTasks() (No individual identifiers or classes yet) and verify they show up on DOM
 * 0.4.3 - Client: add classes to each button (e.g. class="completeButton") and individual identifiers to each button added to a task (e.g. data-taskid="1")
 * 0.4.4 - Client: add $('body').on('click') functions for '.completeButton's (only console.log functionality for now)
 * 0.4.5 - Client: .completeButton .on('click') function make an ajax post call to the update route sending the task id from the identifier
 * 0.4.6 - Client: add call to displayTasks() to update list on DOM and update the function to now show both completed and uncompleted tasks (adding a class to completed ones and making them no longer able to be completed.)
-* 0.4.7 - CSS: Add styling to buttons and completed tasks. The latter should be visually different than the uncompleted tasks and showing the completed ones as 'checked off'. Also add a display: hidden; to the Complete button on the tasks that are completed, so that they can't be completed again.
+<!-- Current Step -->
+* 0.4.7 - CSS: Add styling to buttons and completed tasks. The latter should be visually different than the uncompleted tasks and showing the completed ones as 'checked off'. 
 * 0.5.0 - Test Complete buttons ensuring proper behavior
 
 * 0.5.1 - Server: app.post route to DELETE a task by id from the database
