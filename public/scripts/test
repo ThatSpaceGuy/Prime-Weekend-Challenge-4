@@ -1,0 +1,20 @@
+function buildTable1(){
+  // reset the display of tasks
+  $('#toDoListBox').html('<table><thead><tr><th scope="col">Completed?</th><th scope="col">ToLu Description</th></tr></thead><tbody>');
+
+}
+function buildTable2(){
+  for (var i = 0; i < taskList.length; i++) {
+    // Set Completed text
+    var completedText;
+    if (taskList[i].completed) {
+      completedText = 'Complete!';
+    } else {
+      completedText = '<button>Mark this ToLu Complete!</button>';
+    }
+    $('#toDoListBox').append('<tr><td>'+completedText+'</td><td>'+taskList[i].task_name+'</td></tr>');
+  }
+}
+function buildTable3(){
+  $('#toDoListBox').append('</tbody></table>');
+}

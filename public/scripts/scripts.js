@@ -26,6 +26,7 @@ function addTask(){
         if (verbose) {console.log( 'got this from /addTask - ' + data );}
         // Notify user of success
         $('#messageBox').html('<p>Task created successfully!</p>');
+        displayTasks();
       },
       statusCode: {
         404: function(){
@@ -33,26 +34,55 @@ function addTask(){
         }
       }
     }); // end Ajax post code
-  }
-}
+  } // end else code
+} // end addTask()
+
+function displayTasks(){
+  console.log('in displayTasks');
+  var taskList;
+  // ajax get call to server to get taskList
+  $.ajax({
+    url: '/getTasks',
+    type: 'GET',
+    success: function( data ){
+      if (verbose) {console.log( 'got this from /getRoute - ' + data );}
+
+      taskList = data;
+
+      if (taskList.length>0){
+        // Set the table header
+        document.getElementById("toDoListHeader").innerHTML =
+        '<table><thead><tr><th scope="col" id="col1">Completed?</th><th scope="col" id="col2">ToLu Description</th></tr></thead><tbody>';
+        // reset the display of tasks
+        document.getElementById("toDoListBody").innerHTML = '';
+        for (var i = 0; i < taskList.length; i++) {
+          // Set Completed text
+          var completedText;
+          if (taskList[i].completed) {
+            completedText = 'Complete!';
+          } else {
+            completedText = '<button>Mark this ToLu complete!</button>';
+          }
+          document.getElementById("toDoListBody").innerHTML +=
+          '<tr><td>'+completedText+'</td><td>'+taskList[i].task_name+'</td></tr>';
+        }
+      } // end if
+    } // end success
+  }); //end ajax
+
+
+} // end displayTasks()
 
 function clearMessage(){
   $('#messageBox').html('');
-}
+} // end clearMessage
 
 /// == JavaScript == ///
 
 $(document).ready(function(){
   if (verbose) {console.log('Document ready!');}
 
-  // // ajax get call to server to get object
-  //   $.ajax({
-  //     url: '/getRoute',
-  //     type: 'GET',
-  //     success: function( data ){
-  //       if (verbose) {console.log( 'got this from /getRoute - ' + data );}
-  //     } // end success
-  //   }); //end ajax
+  displayTasks();
 
   $('#addTask').on('click', function(){
     addTask();

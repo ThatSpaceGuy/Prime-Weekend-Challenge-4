@@ -41,7 +41,6 @@ Versioning Plan
 * 0.2.6 - CSS: Tweak basic styling of elements currently in HTML
 * 0.3.0 - Test Create Task button making sure new tasks persist in database
 
-<!-- Current Step -->
 * 0.3.1 - Server: app.get route to SELECT all tasks in the database
 * 0.3.2 - Client: ajax get call for entire task list added in #newTask .on('click')
 * 0.3.3 - Client: displayTasks() function to show all tasks from dB on DOM (basic display of Task name and that it is not completed) (console.log only)
@@ -50,6 +49,7 @@ Versioning Plan
 * 0.3.5 - CSS: Tweak basic styling of tasks when shown in the taskList
 * 0.4.0 - Test Create Task button ensuring DOM is updated correctly
 
+<!-- Current Step -->
 * 0.4.1 - Server: app.post route to UPDATE a completed task by id in the database
 * 0.4.2 - Client: add 'Complete' button options to tasks in displayTasks() (No individual identifiers or classes yet) and verify they show up on DOM
 * 0.4.3 - Client: add classes to each button (e.g. class="completeButton") and individual identifiers to each button added to a task (e.g. data-taskid="1")

@@ -4,9 +4,9 @@ var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
 var pg = require('pg');
-//// --------NEED TO ENTER ***: Database Name
 var connectionString = 'postgress://localhost:5432/ToDoAppDB';
 
+// Middleware Declarations
 app.use(bodyParser.urlencoded( {extended: false } ));
 app.use(bodyParser.json());
 
