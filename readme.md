@@ -37,11 +37,11 @@ Versioning Plan
 * 0.2.2 - Client: ajax post call with new task information on document load
 * 0.2.3 - HTML: #newTask button and input field
 * 0.2.4 - Client: #newTask button .on('click') to grab new task info wrapping the ajax post call
-<!-- Current Step -->
 * 0.2.5 - Client: logic to make sure that something is entered in the input field before making the ajax call
 * 0.2.6 - CSS: Tweak basic styling of elements currently in HTML
-
 * 0.3.0 - Test Create Task button making sure new tasks persist in database
+
+<!-- Current Step -->
 * 0.3.1 - Server: app.get route to SELECT all tasks in the database
 * 0.3.2 - Client: ajax get call for entire task list added in #newTask .on('click')
 * 0.3.3 - Client: displayTasks() function to show all tasks from dB on DOM (basic display of Task name and that it is not completed) (console.log only)

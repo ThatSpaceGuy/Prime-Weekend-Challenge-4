@@ -1,11 +1,44 @@
-/*html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, a {
+html, body, h1, h2, h3, h4, h5, h6, p, ol, ul, li, a {
 	padding: 0;
 	border: 0;
 	margin: 0;
 	font-size: 100%;
 	font: inherit;
-}*/
+}
+
+@font-face {
+    font-family: primeFont;
+    src: url(/media/prime_regular.otf);
+}
 
 body {
 	text-align: center;
+	font-family: primeFont;
+	background-image: url(/media/spaceart4.jpg);
+	background-position: top -170px center;
+	background-size: 125%;
+}
+
+#pageHeader, #appBody {
+	width: 70%;
+	margin: auto;
+}
+
+#pageHeader {
+	margin-top: 50px;
+}
+
+#appBody {
+	background-color: white;
+	margin-top: 30px;
+}
+
+h1 {
+	font-size: 50px;
+}
+h2 {
+	font-size: 20px;
+}
+h3 {
+	font-size: 15px;
 }
