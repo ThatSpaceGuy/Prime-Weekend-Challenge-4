@@ -44,15 +44,16 @@ function displayTasks(){
   if (verbose) {console.log('in displayTasks');}
 
   var taskList;
+  var thisTask;
   // ajax get call to server to get taskList
   $.ajax({
     url: '/getTasks',
     type: 'GET',
     success: function( data ){
       if (verbose) {console.log( 'got this from /getRoute - ' + data );}
-
+      // Store information from database
       taskList = data;
-
+      // If there are tasks to display...
       if (taskList.length>0){
         // Set the table header
         document.getElementById("toDoListHeader").innerHTML =
@@ -60,15 +61,19 @@ function displayTasks(){
         // reset the display of tasks
         document.getElementById("toDoListBody").innerHTML = '';
         for (var i = 0; i < taskList.length; i++) {
+          thisTask = taskList[i].id;
           // Set Completed text
           var completedText;
           if (taskList[i].completed) {
-            completedText = ' class="completedTask"><td>Complete!</td><td class="completedName"';
+            completedText = ' class="completedTask"><td>Completed!</td><td class="completedName"';
           } else {
-            completedText = ' class="openTask"><td><button class="completeButton" data-id="'+taskList[i].id+'">Complete ToLu!</button></td><td';
+            completedText = ' class="openTask"><td><button class="completeButton" data-id="'+
+                thisTask+'">Complete ToLu!</button></td><td';
           }
           document.getElementById("toDoListBody").innerHTML +=
-          '<tr'+completedText+'>'+taskList[i].task_name+'</td><td><button class="deleteButton" data-id="'+taskList[i].id+'">DELETE</button></td></tr>';
+            '<tr id="taskRow'+thisTask+'"'+completedText+' id="taskName'+thisTask+'">'+
+            taskList[i].task_name+'</td><td id="delete'+thisTask+
+            '"><button class="deleteButton" data-id="'+thisTask+'">DELETE</button></td></tr>';
         }
       } // end if
     } // end success
@@ -102,6 +107,18 @@ function updateTask(clickedButton){
     }
   }); // end Ajax post code
 }
+
+function confirmChoice(clickedButton){
+  var taskId = $(clickedButton).data('id');
+  if (verbose) {console.log( 'in confirmChoice with: ' + taskId );}
+  clearMessage();
+
+  $('#taskRow'+taskId).addClass('confirm');
+  $('#taskName'+taskId).prepend('Are you sure you want to delete this task?: ').removeClass('completedName');
+  $('#delete'+taskId).html('<button class="deleteButton yesButton" data-id="'+taskId+
+      '">YES</button><button class="noButton" data-id="'+taskId+'">NO</button>');
+}
+
 
 function deleteTask(clickedButton){
   var taskId = $(clickedButton).data('id');
@@ -159,7 +176,15 @@ $(document).ready(function(){
   });
 
   $('body').on('click', '.deleteButton', function(){
+    confirmChoice(this);
+  });
+
+  $('body').on('click', '.yesButton', function(){
     deleteTask(this);
+  });
+
+  $('body').on('click', '.noButton', function(){
+    displayTasks();
   });
 
 }); // end document ready

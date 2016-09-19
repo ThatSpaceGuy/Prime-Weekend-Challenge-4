@@ -66,6 +66,10 @@ h3 {
 	margin-top: 50px;
 }
 
+#messageBox {
+	min-height: 36px;
+}
+
 .error{
 	background-color: red;
 	color: white;
@@ -109,4 +113,9 @@ table, th, td {
 
 .completedName {
 	text-decoration: line-through;
+}
+
+.confirm {
+	background-color: yellow;
+	font-weight: bold;
 }
