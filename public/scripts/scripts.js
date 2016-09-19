@@ -61,7 +61,7 @@ function displayTasks(){
           if (taskList[i].completed) {
             completedText = 'Complete!';
           } else {
-            completedText = '<button>Mark this ToLu complete!</button>';
+            completedText = '<button class="completeButton" data-id="'+taskList[i].id+'">Mark this ToLu complete!</button>';
           }
           document.getElementById("toDoListBody").innerHTML +=
           '<tr><td>'+completedText+'</td><td>'+taskList[i].task_name+'</td></tr>';

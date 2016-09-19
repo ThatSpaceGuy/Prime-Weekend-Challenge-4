@@ -33,7 +33,7 @@ app.get('/getTasks', function(req,res){
     } else {
       if (verbose) {console.log('app.get/getTasks connected');}
       var resultsArray=[];
-      var queryResults=client.query('SELECT task_name, completed FROM todolist;');
+      var queryResults=client.query('SELECT * FROM todolist;');
       console.log('queryResults:', queryResults);
       queryResults.on('row',function(row){
         resultsArray.push(row);
