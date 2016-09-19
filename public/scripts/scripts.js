@@ -12,7 +12,7 @@ function addTask(){
   // check for empty string
   if (newTaskName===''){
     // if empty then disply message to user
-    $('#messageBox').html('<p>Cannot create blank task. Please enter a task below.</p>');
+    $('#messageBox').html('<p class="error">Cannot create blank task. Please enter a task above.</p>');
   } else { // otherwise proceed with creating a task
     // prepare the task to be sent
     var objectToSend={
@@ -27,13 +27,13 @@ function addTask(){
       success: function( data ){
         if (verbose) {console.log( 'got this from /addTask - ' + data );}
         // Notify user of success
-        $('#messageBox').html('<p>Task created successfully!</p>');
+        $('#messageBox').html('<p class="success">Task created successfully!</p>');
         displayTasks();
         clearInput();
       },
       statusCode: {
         404: function(){
-          $('#messageBox').html('<p>404 Error! Please contact Support.</p>');
+          $('#messageBox').html('<p class="error">404 Error! Please contact Support.</p>');
         }
       }
     }); // end Ajax post code
@@ -42,9 +42,6 @@ function addTask(){
 
 function displayTasks(){
   if (verbose) {console.log('in displayTasks');}
-
-  // clearMessage to start
-  clearMessage();
 
   var taskList;
   // ajax get call to server to get taskList
@@ -59,7 +56,7 @@ function displayTasks(){
       if (taskList.length>0){
         // Set the table header
         document.getElementById("toDoListHeader").innerHTML =
-        '<table><thead><tr><th scope="col" id="col1">Completed?</th><th scope="col" id="col2">ToLu Description</th></tr></thead><tbody>';
+        '<table><thead><tr><th scope="col" id="col1">Completed?</th><th scope="col" id="col2">ToLu Description</th><th scope="col" id="col3">Delete?</th></tr></thead><tbody>';
         // reset the display of tasks
         document.getElementById("toDoListBody").innerHTML = '';
         for (var i = 0; i < taskList.length; i++) {
@@ -68,10 +65,10 @@ function displayTasks(){
           if (taskList[i].completed) {
             completedText = ' class="completedTask"><td>Complete!</td><td class="completedName"';
           } else {
-            completedText = ' class="openTask"><td><button class="completeButton" data-id="'+taskList[i].id+'">Mark this ToLu complete!</button></td><td';
+            completedText = ' class="openTask"><td><button class="completeButton" data-id="'+taskList[i].id+'">Complete ToLu!</button></td><td';
           }
           document.getElementById("toDoListBody").innerHTML +=
-          '<tr'+completedText+'>'+taskList[i].task_name+'</td></tr>';
+          '<tr'+completedText+'>'+taskList[i].task_name+'</td><td><button class="deleteButton" data-id="'+taskList[i].id+'">DELETE</button></td></tr>';
         }
       } // end if
     } // end success
@@ -87,25 +84,52 @@ function updateTask(clickedButton){
     taskNum: taskId
   };
 
-  // ajax post code that sends object to /addTask route
+  // ajax post code that sends object to /updateTask route
   $.ajax({
     type: 'POST',
     url: '/updateTask',
     data: objectToSend,
     success: function( data ){
-      if (verbose) {console.log( 'got this from /addTask - ' + data );}
+      if (verbose) {console.log( 'got this from /updateTask - ' + data );}
       // Notify user of success
-      $('#messageBox').html('<p>Task completed successfully!</p>');
+      $('#messageBox').html('<p class="success">Task completed successfully!</p>');
       displayTasks();
     },
     statusCode: {
       404: function(){
-        $('#messageBox').html('<p>404 Error! Please contact Support.</p>');
+        $('#messageBox').html('<p class="error">404 Error! Please contact Support.</p>');
       }
     }
   }); // end Ajax post code
 }
 
+function deleteTask(clickedButton){
+  var taskId = $(clickedButton).data('id');
+  if (verbose) {console.log( 'in deleteTask with: ' + taskId );}
+
+  // prepare the objectToSend
+  var objectToSend = {
+    taskNum: taskId
+  };
+
+  // ajax post code that sends object to /deleteTask route
+  $.ajax({
+    type: 'POST',
+    url: '/deleteTask',
+    data: objectToSend,
+    success: function( data ){
+      if (verbose) {console.log( 'got this from /deleteTask - ' + data );}
+      // Notify user of success
+      $('#messageBox').html('<p class="success">Task Deleted successfully!</p>');
+      displayTasks();
+    },
+    statusCode: {
+      404: function(){
+        $('#messageBox').html('<p class="error">404 Error! Please contact Support.</p>');
+      }
+    }
+  }); // end Ajax post code
+} // end deleteTask
 
 function clearMessage(){
   $('#messageBox').html('');
@@ -124,7 +148,7 @@ $(document).ready(function(){
   displayTasks();
 
   // Event listeners
-  // Permanennt buttons
+  // Permanent buttons
   $('#addTask').on('click', function(){
     addTask();
   }); // end #addTask.on('click')
@@ -134,6 +158,8 @@ $(document).ready(function(){
     updateTask(this);
   });
 
-
+  $('body').on('click', '.deleteButton', function(){
+    deleteTask(this);
+  });
 
 }); // end document ready

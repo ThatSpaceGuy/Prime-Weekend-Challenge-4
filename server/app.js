@@ -54,7 +54,7 @@ app.get('/getTasks', function(req,res){
 //   res.send('/routeName response. Received: '+req.body);
 // });
 
-//post route to add or update information in Database
+//post route to add information to Database
 app.post( '/addTask', function( req, res ){
   if (verbose) {console.log( 'addTask route hit', req.body );}
 
@@ -75,7 +75,7 @@ app.post( '/addTask', function( req, res ){
   });
 });//end /addTask
 
-//post route to add or update information in Database
+//post route to update information in Database
 app.post( '/updateTask', function( req, res ){
   if (verbose) {console.log( 'updateTask route hit', req.body );}
 
@@ -95,6 +95,27 @@ app.post( '/updateTask', function( req, res ){
     }
   });
 });//end /updateTask
+
+//post route to delete information in Database
+app.post( '/deleteTask', function( req, res ){
+  if (verbose) {console.log( 'deleteTask route hit', req.body );}
+
+  var deleteID = req.body.taskNum;
+
+  var queryString = 'DELETE FROM todolist WHERE id = ($1);';
+  if (verbose) {console.log('sending to database:', queryString);}
+  //send queryString to database
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+      if (verbose) {console.log(err);}
+    }
+    else{
+      client.query(queryString,[deleteID]);
+      done();
+      return res.sendStatus(200);
+    }
+  });
+});//end /deleteTask
 
 // // post route that adds or updates information in Database and also receives info
 // app.post( '/postRouteB', function( req, res ){
