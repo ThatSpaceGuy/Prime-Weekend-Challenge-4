@@ -26,26 +26,26 @@ app.get('/', function(req,res){
 app.use(express.static('public'));
 
 // GET route with a Database call
-// app.get('/getRoute', function(req,res){
-//   pg.connect(connectionString, function(err, client, done){
-//     if (err){
-//       if (verbose) {console.log(err);}
-//     } else {
-//       if (verbose) {console.log('app.get/getRoute connected');}
-//       var resultsArray=[];
-//       //// --------NEED TO ENTER ***: SQL Query
-//       var queryResults=client.query('***');
-//       queryResults.on('row',function(row){
-//         resultsArray.push(row);
-//       });
-//       if (verbose) {console.log('resultsArray from getRoute query:',resultsArray);}
-//       queryResults.on('end',function(){
-//         done();
-//         return res.send(resultsArray);
-//       }); // end queryResults.on('end')
-//     }// end else
-//   }); // end pg.connect
-// }); // end app.get getRoute
+app.get('/getTasks', function(req,res){
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+      if (verbose) {console.log(err);}
+    } else {
+      if (verbose) {console.log('app.get/getTasks connected');}
+      var resultsArray=[];
+      var queryResults=client.query('SELECT task_name, completed FROM todolist;');
+      console.log('queryResults:', queryResults);
+      queryResults.on('row',function(row){
+        resultsArray.push(row);
+      });
+      queryResults.on('end',function(){
+        if (verbose) {console.log('resultsArray from getTasks query:',resultsArray);}
+        done();
+        return res.send(resultsArray);
+      }); // end queryResults.on('end')
+    }// end else
+  }); // end pg.connect
+}); // end app.get getTasks
 
 
 // post route to receive information from client
@@ -75,7 +75,7 @@ app.post( '/addTask', function( req, res ){
   });
 });//end /addTask
 
-// post route that adds or updates information in Database and also receives info
+// // post route that adds or updates information in Database and also receives info
 // app.post( '/postRouteB', function( req, res ){
 //   if (verbose) {console.log( 'postRouteB route hit', req.body );}
 //   //// --------NEED TO ENTER ***: SQL Query
