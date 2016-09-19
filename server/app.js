@@ -33,7 +33,7 @@ app.get('/getTasks', function(req,res){
     } else {
       if (verbose) {console.log('app.get/getTasks connected');}
       var resultsArray=[];
-      var queryResults=client.query('SELECT * FROM todolist;');
+      var queryResults=client.query('SELECT * FROM todolist ORDER BY id;');
       console.log('queryResults:', queryResults);
       queryResults.on('row',function(row){
         resultsArray.push(row);
@@ -74,6 +74,27 @@ app.post( '/addTask', function( req, res ){
     }
   });
 });//end /addTask
+
+//post route to add or update information in Database
+app.post( '/updateTask', function( req, res ){
+  if (verbose) {console.log( 'updateTask route hit', req.body );}
+
+  var updateID = req.body.taskNum;
+
+  var queryString = 'UPDATE todolist SET completed = true WHERE id = ($1);';
+  if (verbose) {console.log('sending to database:', queryString);}
+  //send queryString to database
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+      if (verbose) {console.log(err);}
+    }
+    else{
+      client.query(queryString,[updateID]);
+      done();
+      return res.sendStatus(200);
+    }
+  });
+});//end /updateTask
 
 // // post route that adds or updates information in Database and also receives info
 // app.post( '/postRouteB', function( req, res ){

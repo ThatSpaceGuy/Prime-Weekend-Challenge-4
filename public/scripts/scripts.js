@@ -4,6 +4,7 @@ var verbose = true; // if (verbose) {console.log('');}
 
 /// == Function Declarations == ///
 function addTask(){
+  if (verbose) {console.log('in addTask');}
   // empty Message box
   clearMessage();
   // grab new task name
@@ -17,6 +18,7 @@ function addTask(){
     var objectToSend={
       taskName: newTaskName
     };
+    if (verbose) {console.log('about to send:',newTaskName);}
     // ajax post code that sends object to /addTask route
     $.ajax({
       type: 'POST',
@@ -27,6 +29,7 @@ function addTask(){
         // Notify user of success
         $('#messageBox').html('<p>Task created successfully!</p>');
         displayTasks();
+        clearInput();
       },
       statusCode: {
         404: function(){
@@ -38,7 +41,11 @@ function addTask(){
 } // end addTask()
 
 function displayTasks(){
-  console.log('in displayTasks');
+  if (verbose) {console.log('in displayTasks');}
+
+  // clearMessage to start
+  clearMessage();
+
   var taskList;
   // ajax get call to server to get taskList
   $.ajax({
@@ -69,23 +76,64 @@ function displayTasks(){
       } // end if
     } // end success
   }); //end ajax
-
-
 } // end displayTasks()
+
+function updateTask(clickedButton){
+  var taskId = $(clickedButton).data('id');
+  if (verbose) {console.log( 'in updateTask with: ' + taskId );}
+
+  // prepare the objectToSend
+  var objectToSend = {
+    taskNum: taskId
+  };
+
+  // ajax post code that sends object to /addTask route
+  $.ajax({
+    type: 'POST',
+    url: '/updateTask',
+    data: objectToSend,
+    success: function( data ){
+      if (verbose) {console.log( 'got this from /addTask - ' + data );}
+      // Notify user of success
+      $('#messageBox').html('<p>Task completed successfully!</p>');
+      displayTasks();
+    },
+    statusCode: {
+      404: function(){
+        $('#messageBox').html('<p>404 Error! Please contact Support.</p>');
+      }
+    }
+  }); // end Ajax post code
+}
+
 
 function clearMessage(){
   $('#messageBox').html('');
 } // end clearMessage
 
-/// == JavaScript == ///
+function clearInput(){
+  $('#newTaskText').val('');
+} // end clearInput
 
+/// == JavaScript == ///
 $(document).ready(function(){
   if (verbose) {console.log('Document ready!');}
 
+  // immediate actions
+  // get and display tasks right away
   displayTasks();
 
+  // Event listeners
+  // Permanennt buttons
   $('#addTask').on('click', function(){
     addTask();
   }); // end #addTask.on('click')
+
+  // Dynamic buttons
+  $('body').on('click', '.completeButton', function(){
+    updateTask(this);
+  });
+
+
 
 }); // end document ready
