@@ -33,7 +33,7 @@ app.get('/getTasks', function(req,res){
     } else {
       if (verbose) {console.log('app.get/getTasks connected');}
       var resultsArray=[];
-      var queryResults=client.query('SELECT * FROM todolist ORDER BY id;');
+      var queryResults=client.query('SELECT * FROM todolist ORDER BY completed, id;');
       console.log('queryResults:', queryResults);
       queryResults.on('row',function(row){
         resultsArray.push(row);
