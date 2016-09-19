@@ -77,8 +77,8 @@ Versioning Plan
 * 2.0.2 - CSS: Tweak the styling of the entire page
 * 3.0.0 - Test the app functionality and sign off on Pro Mode
 
-* 3.1.0 - Ability to adjust the name of a task
-* 3.2.0 - Ability to Uncomplete a task
+* 3.1.0 - Ability to Uncomplete a task
+* 3.2.0 - Ability to adjust the name of a task
 * 3.3.0 - Visually separate completed tasks with headers
 * 3.4.0 - Animate transitions for tasks
 * 3.5.0 - Urgent flag and creation date for tasks

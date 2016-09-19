@@ -80,8 +80,9 @@ app.post( '/updateTask', function( req, res ){
   if (verbose) {console.log( 'updateTask route hit', req.body );}
 
   var updateID = req.body.taskNum;
+  var completedStatus = req.body.taskDone;
 
-  var queryString = 'UPDATE todolist SET completed = true WHERE id = ($1);';
+  var queryString = 'UPDATE todolist SET completed = '+completedStatus+' WHERE id = ($1);';
   if (verbose) {console.log('sending to database:', queryString);}
   //send queryString to database
   pg.connect(connectionString, function(err, client, done){

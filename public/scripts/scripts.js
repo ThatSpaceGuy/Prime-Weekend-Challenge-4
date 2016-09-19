@@ -3,6 +3,7 @@ console.log('scripts.js sourced!');
 var verbose = true; // if (verbose) {console.log('');}
 
 /// == Function Declarations == ///
+// called from the #addTask .on('click')
 function addTask(){
   if (verbose) {console.log('in addTask');}
   // empty Message box
@@ -27,7 +28,7 @@ function addTask(){
       success: function( data ){
         if (verbose) {console.log( 'got this from /addTask - ' + data );}
         // Notify user of success
-        $('#messageBox').html('<p class="success">Task created successfully!</p>');
+        $('#messageBox').html('<p class="success">ToLu created successfully!</p>');
         displayTasks();
         clearInput();
       },
@@ -40,6 +41,7 @@ function addTask(){
   } // end else code
 } // end addTask()
 
+// called from page load, addTask(), updateTask(), deleteTask(), and noButton .on('click')
 function displayTasks(){
   if (verbose) {console.log('in displayTasks');}
 
@@ -65,28 +67,35 @@ function displayTasks(){
           // Set Completed text
           var completedText;
           if (taskList[i].completed) {
-            completedText = ' class="completedTask"><td>Completed!</td><td class="completedName"';
+            completedText = ' class="completedTask">'+
+            '<td>Completed! <button class="undoButton" data-id="'+thisTask+'">Undo?</button></td>'+
+            '<td class="completedName"';
           } else {
-            completedText = ' class="openTask"><td><button class="completeButton" data-id="'+
-                thisTask+'">Complete ToLu!</button></td><td';
+            completedText = ' class="openTask">'+
+            '<td><button class="completeButton" data-id="'+thisTask+'">Complete ToLu!</button></td>'+
+            '<td';
           }
           document.getElementById("toDoListBody").innerHTML +=
-            '<tr id="taskRow'+thisTask+'"'+completedText+' id="taskName'+thisTask+'">'+
-            taskList[i].task_name+'</td><td id="delete'+thisTask+
-            '"><button class="deleteButton" data-id="'+thisTask+'">DELETE</button></td></tr>';
+          '<tr id="taskRow'+thisTask+'"'+completedText+
+          ' id="taskName'+thisTask+'">'+taskList[i].task_name+'</td>'+
+          '<td id="delete'+thisTask+'"><button class="deleteButton" data-id="'+thisTask+'">DELETE</button></td>'+
+          '</tr>';
         }
       } // end if
     } // end success
   }); //end ajax
 } // end displayTasks()
 
-function updateTask(clickedButton){
+// called from completeButton .on('click') with taskChecked=true
+// called from undoButton .on('click') with taskChecked=false
+function updateTask(clickedButton,taskChecked){
   var taskId = $(clickedButton).data('id');
   if (verbose) {console.log( 'in updateTask with: ' + taskId );}
 
   // prepare the objectToSend
   var objectToSend = {
-    taskNum: taskId
+    taskNum: taskId,
+    taskDone: taskChecked
   };
 
   // ajax post code that sends object to /updateTask route
@@ -97,7 +106,7 @@ function updateTask(clickedButton){
     success: function( data ){
       if (verbose) {console.log( 'got this from /updateTask - ' + data );}
       // Notify user of success
-      $('#messageBox').html('<p class="success">Task completed successfully!</p>');
+      $('#messageBox').html('<p class="success">ToLu completed successfully!</p>');
       displayTasks();
     },
     statusCode: {
@@ -108,18 +117,22 @@ function updateTask(clickedButton){
   }); // end Ajax post code
 }
 
+// called only from the deleteButton .on('click')
 function confirmChoice(clickedButton){
   var taskId = $(clickedButton).data('id');
   if (verbose) {console.log( 'in confirmChoice with: ' + taskId );}
   clearMessage();
-
+  // Change background-color
   $('#taskRow'+taskId).addClass('confirm');
+  // Display message and remove line-through
   $('#taskName'+taskId).prepend('Are you sure you want to delete this task?: ').removeClass('completedName');
-  $('#delete'+taskId).html('<button class="deleteButton yesButton" data-id="'+taskId+
-      '">YES</button><button class="noButton" data-id="'+taskId+'">NO</button>');
+  // Disply choice buttons
+  $('#delete'+taskId).html(
+    '<button class="deleteButton yesButton" data-id="'+taskId+'">YES</button>'+
+    '<button class="noButton" data-id="'+taskId+'">NO</button>');
 }
 
-
+// called only from the yesButton .on('click')
 function deleteTask(clickedButton){
   var taskId = $(clickedButton).data('id');
   if (verbose) {console.log( 'in deleteTask with: ' + taskId );}
@@ -137,7 +150,7 @@ function deleteTask(clickedButton){
     success: function( data ){
       if (verbose) {console.log( 'got this from /deleteTask - ' + data );}
       // Notify user of success
-      $('#messageBox').html('<p class="success">Task Deleted successfully!</p>');
+      $('#messageBox').html('<p class="success">ToLu Deleted successfully!</p>');
       displayTasks();
     },
     statusCode: {
@@ -148,10 +161,12 @@ function deleteTask(clickedButton){
   }); // end Ajax post code
 } // end deleteTask
 
+// called from addTask() and confirmChoice()
 function clearMessage(){
   $('#messageBox').html('');
 } // end clearMessage
 
+// called from addTask()
 function clearInput(){
   $('#newTaskText').val('');
 } // end clearInput
@@ -172,7 +187,11 @@ $(document).ready(function(){
 
   // Dynamic buttons
   $('body').on('click', '.completeButton', function(){
-    updateTask(this);
+    updateTask(this, true);
+  });
+
+  $('body').on('click', '.undoButton', function(){
+    updateTask(this, false);
   });
 
   $('body').on('click', '.deleteButton', function(){
